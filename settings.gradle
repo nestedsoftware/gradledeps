@@ -8,4 +8,4 @@
  */
 
 rootProject.name = 'gradledeps'
-include('app', 'mathlib', 'matrixlib')
+include('app', 'mathlib', 'matrixlib', 'annotationprocessor')

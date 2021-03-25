@@ -10,13 +10,13 @@ import static org.junit.Assert.*;
 public class MathLibraryTest {
     @Test
     public void convert_returnsValues() {
-        MathLibrary mathLibrary = new MathLibrary();
+        MathLibrary mathLibrary = MathLibrary.create();
         Double[] values = mathLibrary.convert("1.3,5.6,9,100");
         assertArrayEquals(new Double[] {1.3, 5.6, 9d, 100d}, values);
     }
 
     public void convert_returnsMatrix() {
-        MathLibrary mathLibrary = new MathLibrary();
+        MathLibrary mathLibrary = MathLibrary.create();
         Matrix matrix = mathLibrary.convertToMatrix("1.3,5.6,9,100");
         assertArrayEquals(new Double[] {1.3, 5.6, 9d, 100d}, matrix.getValues());
     }

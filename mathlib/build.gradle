@@ -21,7 +21,7 @@ repositories {
 dependencies {
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13'
-    api 'com.matrixstuff.matrixlib:matrixlib:1.0.0'
+    implementation 'com.matrixstuff.matrixlib:matrixlib:1.0.0'
 }
 
 publishing {

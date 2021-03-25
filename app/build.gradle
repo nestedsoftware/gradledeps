@@ -3,7 +3,7 @@
  */
 
 plugins {
-    id 'application'
+    id 'java'
 }
 
 repositories {
@@ -16,7 +16,7 @@ dependencies {
     testImplementation 'junit:junit:4.13'
 }
 
-application {
-    // Define the main class for the application.
-    mainClass = 'gradledeps.app.App'
-}
+//application {
+//    // Define the main class for the application.
+//    mainClass = 'gradledeps.app.App'
+//}

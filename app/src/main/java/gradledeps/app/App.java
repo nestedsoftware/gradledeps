@@ -8,7 +8,7 @@ import com.matrixstuff.matrixlib.Matrix;
 
 public class App {
     public static void main(String[] args) {
-        MathLibrary mathlib = new MathLibrary();
+        MathLibrary mathlib = MathLibrary.create();
 
         System.out.println("printing values...");
         Double[] values = mathlib.convert("66.3, -2, 900");
