@@ -17,7 +17,7 @@ public class Person implements PersonIF {
 
     @InterfaceProperty
     @Override
-    public Poop doStuff3() {
+    public void doStuff3() {
         System.out.println("hello!");
     }
 
@@ -25,6 +25,7 @@ public class Person implements PersonIF {
     @Override
     public String doStuff4() {
         System.out.println("hello!");
+        return "hello";
     }
 
 }

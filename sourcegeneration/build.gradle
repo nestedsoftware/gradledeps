@@ -16,8 +16,20 @@ dependencies {
     compileOnly 'com.generators:interfacegenerator:0.0.1'
 }
 
+
+
 compileJava {
-    options.compilerArgs += '-proc:only'
+//    dependsOn("generateSources")
+//    options.compilerArgs += '-proc:none'
+}
+
+task generateSources(type: JavaCompile) {
+    source = sourceSets.main.java.srcDirs
+    classpath = sourceSets.main.compileClasspath
+    destinationDir=file("$buildDir")
+    options.compilerArgs = ['-proc:only', '-processor', 'generators.GenerateInterfaceProcessor']
+    options.annotationProcessorPath = configurations.annotationProcessor
+    options.annotationProcessorGeneratedSourcesDirectory = file("$buildDir/generated/sources")
 }
 
 

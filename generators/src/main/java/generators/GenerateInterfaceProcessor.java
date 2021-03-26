@@ -1,5 +1,8 @@
 package generators;
 
+import com.google.common.collect.*;
+import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
 import javax.annotation.processing.SupportedAnnotationTypes;
@@ -12,7 +15,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.tools.JavaFileObject;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,21 +26,15 @@ public class GenerateInterfaceProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
-        for (TypeElement annotation : annotations) {
-            Set<? extends Element> annotatedMethods
-                    = roundEnv.getElementsAnnotatedWith(annotation);
+        @NotNull Map<String, Set<Element>> classesWithMethods = getMethodsGroupedByClass(annotations, roundEnv);
 
-
-            if (annotatedMethods.size() == 0) {
+        for (Map.Entry<String, Set<Element>> entry : classesWithMethods.entrySet()) {
+            if (entry.getValue().size() == 0) {
                 continue;
             }
 
-            List<? extends Element> annotatedMethodsList = annotatedMethods.stream().collect(Collectors.toList());
-            Element firstMethod = annotatedMethodsList.get(0);
-            String className = ((TypeElement) firstMethod.getEnclosingElement()).getQualifiedName().toString();
-
+            String className = entry.getKey();
             String packageName = getPackageName(className);
-            String simpleClassName = getSimpleClassName(className);
 
             String builderClassName = className + "IF";
             String builderSimpleClassName = getSimpleGeneratedClassName(builderClassName);
@@ -60,7 +57,7 @@ public class GenerateInterfaceProcessor extends AbstractProcessor {
                     b.append(" {");
                     b.append("\n");
 
-                    annotatedMethodsList.forEach(method -> {
+                    entry.getValue().forEach(method -> {
                         String methodName = method.getSimpleName().toString();
                         TypeMirror returnType = ((ExecutableType) method.asType()).getReturnType();
 
@@ -82,7 +79,30 @@ public class GenerateInterfaceProcessor extends AbstractProcessor {
             }
         }
 
+
         return true;
+    }
+
+    private @NotNull Map<String, Set<Element>> getMethodsGroupedByClass(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
+        SetMultimap<String, Element> classesToMethods = HashMultimap.create();
+
+        for (TypeElement annotation : annotations) {
+            Set<? extends Element> annotatedMethods = roundEnv.getElementsAnnotatedWith(annotation);
+
+            if (annotatedMethods.size() == 0) {
+                continue;
+            }
+
+            Set<Element> annotatedMethodsSet = annotatedMethods.stream().collect(Collectors.toSet());
+
+            for (Element method : annotatedMethodsSet) {
+                String className = ((TypeElement) method.getEnclosingElement()).getQualifiedName().toString();
+
+                classesToMethods.put(className, method);
+            }
+        }
+
+        return Multimaps.asMap(classesToMethods);
     }
 
     private String getPackageName(String className) {
