@@ -11,6 +11,16 @@ repositories {
     mavenLocal()
 }
 
+dependencies {
+    annotationProcessor 'com.generators:interfacegenerator:0.0.1'
+    compileOnly 'com.generators:interfacegenerator:0.0.1'
+}
+
+compileJava {
+    options.compilerArgs += '-proc:only'
+}
+
+
 abstract class IncrementalReverseTask extends DefaultTask {
     @Incremental
     @PathSensitive(PathSensitivity.NAME_ONLY)
