@@ -38,6 +38,7 @@ compileJava {
 
 task generateSources(type: JavaCompile) {
     options.compilerArgs = ['-proc:only']
+
     //better way to do this?
     source = compileJava.source
     classpath = compileJava.classpath
