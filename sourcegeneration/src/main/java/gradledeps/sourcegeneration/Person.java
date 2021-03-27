@@ -2,7 +2,6 @@ package gradledeps.sourcegeneration;
 
 import generators.InterfaceProperty;
 import gradledeps.sourcegeneration.pets.Pet;
-import gradledeps.sourcegeneration.pets.PetIF;
 
 public class Person implements PersonIF {
     @InterfaceProperty
