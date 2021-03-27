@@ -1,6 +1,8 @@
 package gradledeps.sourcegeneration;
 
 import generators.InterfaceProperty;
+import gradledeps.sourcegeneration.pets.Pet;
+import gradledeps.sourcegeneration.pets.PetIF;
 
 public class Person implements PersonIF {
     @InterfaceProperty
@@ -23,9 +25,9 @@ public class Person implements PersonIF {
 
     @InterfaceProperty
     @Override
-    public String doStuff4() {
+    public gradledeps.sourcegeneration.pets.PetIF getPet() {
         System.out.println("hello!");
-        return "hello";
+        return new Pet();
     }
 
 }

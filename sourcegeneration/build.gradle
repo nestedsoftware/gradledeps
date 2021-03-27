@@ -16,20 +16,18 @@ dependencies {
     compileOnly 'com.generators:interfacegenerator:0.0.1'
 }
 
-
-
 compileJava {
 //    dependsOn("generateSources")
 //    options.compilerArgs += '-proc:none'
 }
 
 task generateSources(type: JavaCompile) {
-    source = sourceSets.main.java.srcDirs
-    classpath = sourceSets.main.compileClasspath
-    destinationDir=file("$buildDir")
-    options.compilerArgs = ['-proc:only', '-processor', 'generators.GenerateInterfaceProcessor']
-    options.annotationProcessorPath = configurations.annotationProcessor
-    options.annotationProcessorGeneratedSourcesDirectory = file("$buildDir/generated/sources")
+//    source = sourceSets.main.java.srcDirs
+//    classpath = sourceSets.main.compileClasspath
+//    destinationDir = file("$buildDir")
+//    options.compilerArgs = ['-proc:only', '-processor', 'generators.GenerateInterfaceProcessor']
+//    options.annoationProcessorPath = configurations.annotationProcessor
+//    options.annotationProcessorGeneratedSourcesDirectory = file("$buildDir/generated/sources")
 }
 
 
@@ -71,5 +69,3 @@ task incrementalReverse(type: IncrementalReverseTask) {
     outputDir = file("$buildDir/outputs")
     inputProperty = project.properties['taskInputProperty'] ?: 'original'
 }
-
-//task hello(type: GreetingTask)
