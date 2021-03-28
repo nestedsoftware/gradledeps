@@ -20,8 +20,8 @@ dependencies {
 }
 
 compileJava {
-    dependsOn("generateSources")
-    options.compilerArgs = ['-proc:none']
+//    dependsOn("generateSources")
+//    options.compilerArgs = ['-proc:none']
 
 //    doLast {
 //        println("classpath = $classpath")

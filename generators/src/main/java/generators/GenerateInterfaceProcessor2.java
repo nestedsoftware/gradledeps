@@ -3,11 +3,12 @@ package generators;
 import com.google.common.collect.*;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.processing.*;
+import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.RoundEnvironment;
+import javax.annotation.processing.SupportedAnnotationTypes;
+import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ExecutableType;
 import javax.lang.model.type.TypeMirror;
@@ -18,13 +19,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@SupportedAnnotationTypes("generators.InterfaceProperty")
+@SupportedAnnotationTypes("generators.InterfaceProperty2")
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
-public class GenerateInterfaceProcessor extends GenerateInterfaceProcessorBase {
+public class GenerateInterfaceProcessor2 extends GenerateInterfaceProcessorBase {
     @Override
     public boolean process(Set<? extends TypeElement> annotations,
                            RoundEnvironment roundEnv) {
-        System.out.println("GenerateInterfaceProcessor::process");
+        System.out.println("GenerateInterfaceProcessor2::process");
         return super.process(annotations, roundEnv);
     }
 }
