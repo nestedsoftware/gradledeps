@@ -49,7 +49,7 @@ task generateSources(type: JavaCompile) {
     options.compilerArgs = ['-proc:only']
 
     //is there better way to "clone" compileJava task?
-    source = sourceSets.main.java //we don't want to include the generated source as inputs, or else this task will always run, even if we don't change e.g. Person.java and Pet.java
+    source = "src/main/java" //we don't want to include the generated source as inputs, or else this task will always run, even if we don't change e.g. Person.java and Pet.java
     classpath = compileJava.classpath
     destinationDir = compileJava.destinationDir
     options.annotationProcessorPath = compileJava.options.annotationProcessorPath
