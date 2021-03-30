@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedSourceVersion;
-import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ExecutableType;
@@ -36,20 +34,22 @@ public class GenerateInterfaceProcessorBase extends AbstractProcessor {
 
 
             try {
+                String className = entry.getKey();
+                TypeElement originatingElement = processingEnv.getElementUtils().getTypeElement(className);
                 JavaFileObject builderFile = processingEnv.getFiler()
-                        .createSourceFile(entry.getKey() + "IF");
+                        .createSourceFile(className + "IF", originatingElement);
 
                 try (PrintWriter out = new PrintWriter(builderFile.openWriter())) {
                     StringBuilder b = new StringBuilder();
-                    if (getPackageName(entry.getKey()) != null) {
+                    if (getPackageName(className) != null) {
                         b.append("package ");
-                        b.append(getPackageName(entry.getKey()));
+                        b.append(getPackageName(className));
                         b.append(";");
                         b.append("\n");
                     }
 
                     b.append("public interface ");
-                    b.append(getSimpleClassName(entry.getKey() + "IF"));
+                    b.append(getSimpleClassName(className + "IF"));
                     b.append(" {");
                     b.append("\n");
 
@@ -74,7 +74,6 @@ public class GenerateInterfaceProcessorBase extends AbstractProcessor {
                 e.printStackTrace();
             }
         }
-
 
         return true;
     }
