@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+}
+
+ext {
+    antGeneratedSourcesDir = "${buildDir}/generated-sources/ant-generated-sources"
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir antGeneratedSourcesDir
+            compileClasspath += files(antGeneratedSourcesDir)
+        }
+    }
+}
+
+configurations {
+    ap
+}
+
+dependencies {
+    ap project(':processors')
+    compileOnly project(':processors')
+    testImplementation 'junit:junit:4.13'
+}
+
+compileJava {
+    dependsOn 'generateSourcesWithAnnotationProcessor'
+}
+
+task generateSourcesWithAnnotationProcessor {
+    def classpathWithAnnotationProcessor = configurations.ap.plus(configurations.compileClasspath)
+
+    inputs.dir fileTree(dir: "src/main/java")
+    outputs.dir antGeneratedSourcesDir
+
+    doLast {
+        mkdir "$buildDir/tmp"
+        mkdir "$antGeneratedSourcesDir"
+        ant.javac(includeantruntime: "false",
+                nowarn: "true",
+                encoding: "UTF-8",
+                failonerror: "false",
+                destdir: "$buildDir/tmp",
+                includes: "**/*.java",
+                classpath: "${classpathWithAnnotationProcessor.asPath}") {
+            compilerclasspath(path: "${classpathWithAnnotationProcessor.asPath}")
+            compilerarg(value: "-proc:only")
+            compilerarg(value: "-s")
+            compilerarg(value: "${antGeneratedSourcesDir}")
+            compilerarg(value: "-processor")
+            compilerarg(value: "generators.GenerateInterfaceProcessor")
+            compilerarg(value: "-processorpath")
+            compilerarg(value: "${classpathWithAnnotationProcessor.asPath}")
+            src (path: "src/main/java")
+        }
+    }
+}

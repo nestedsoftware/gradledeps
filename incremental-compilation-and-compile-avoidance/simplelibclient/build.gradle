@@ -1,0 +1,14 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Use JUnit test framework.
+    implementation project(":simplelib")
+    testImplementation 'junit:junit:4.13'
+}
+
