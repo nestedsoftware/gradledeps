@@ -7,5 +7,23 @@
  * in the user manual at https://docs.gradle.org/6.7.1/userguide/multi_project_builds.html
  */
 
-rootProject.name = 'gradledeps'
-include('app', 'mathlib', 'matrixlib', 'sourcegeneration', 'generators')
+rootProject.name = 'gradle-experiments'
+include(':app',
+        ':ml-lib',
+        ':matrixlib',
+        ':simplelib',
+        ':simplelibclient',
+        ':processors',
+        ':processors-client',
+        ':processors-client-ant')
+
+project(':app').projectDir = new File("$rootProject.projectDir/dependency-management", "app")
+project(':matrixlib').projectDir = new File("$rootProject.projectDir/dependency-management", "matrixlib")
+project(':ml-lib').projectDir = new File("$rootProject.projectDir/dependency-management", "ml-lib")
+
+project(':simplelib').projectDir = new File("$rootProject.projectDir/incremental-compilation-and-compile-avoidance", "simplelib")
+project(':simplelibclient').projectDir = new File("$rootProject.projectDir/incremental-compilation-and-compile-avoidance", "simplelibclient")
+
+project(':processors').projectDir = new File("$rootProject.projectDir/annotation-processing", "processors")
+project(':processors-client').projectDir = new File("$rootProject.projectDir/annotation-processing", "processors-client")
+project(':processors-client-ant').projectDir = new File("$rootProject.projectDir/annotation-processing", "processors-client-ant")
