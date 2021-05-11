@@ -8,16 +8,4 @@ public class City implements CityIF {
     public void doStuff() {
         System.out.println("hello!");
     }
-
-    @InterfaceProperty
-    @Override
-    public void doStuff2() {
-        System.out.println("hello!");
-    }
-
-    @InterfaceProperty
-    @Override
-    public void doStuff3() {
-        System.out.println("hello!");
-    }
 }

@@ -13,10 +13,4 @@ public class Country implements CountryIF {
     public void doStuff() {
         _state.doStuff();
     }
-
-    @InterfaceProperty
-    @Override
-    public void doStuff2() {
-        _state.doStuff();
-    }
 }
